@@ -53,6 +53,8 @@ typedef char s8;
 extern "C" { 
 #endif
 
+
+
   #ifdef ASM
     // s should point to 128-bit data and 128-bit key
     void aes_ecb_asm(void *s);
@@ -73,3 +75,5 @@ extern "C" {
 #endif
 
 #endif
+extern void AES_CMAC ( uint8_t *key, uint8_t *input, int length, uint8_t *mac );
+void aes_cbc(uint8_t *key,uint8_t *input,int length);

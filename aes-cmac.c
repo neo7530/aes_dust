@@ -1,0 +1,45 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <stdint.h>
+
+#include "aes.h"
+
+
+
+
+void print128(uint8_t *bytes,int len)
+{
+      int         j;
+      for (j=0; j<len;j++) {
+          printf("%02X ",bytes[j]);
+          //if ( (j%4) == 3 ) printf(" ");
+      }
+	printf("\n");
+}
+
+
+ 
+int main (void) {
+
+uint8_t key[] = {0xBB,0xAA,0x99,0x88,0x77,0x66,0x55,0x44,0xFF,0xEE,0xDD,0xCC,0x33,0x22,0x11,0x00};
+uint8_t str[] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x08,0x07,0x06,0x05,0x4,3,2,1,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x08,0x07,0x06,0x05,0x4,3,2,1,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x08,0x07,0x06,0x05,0x4,3,2,1};
+uint8_t mac[16];
+	printf("\nAES-KEY \n");
+	print128(key,16);
+	printf("\nraw buffer \n");
+	print128(str,sizeof(str));	
+	AES_CMAC(key,str,sizeof(str),mac);
+ 	printf("\nAES-CMAC: \n");   
+ 	print128(mac,16);
+	//padding(str,str,(sizeof(str)+15)/16);
+	aes_cbc(key,str,sizeof(str));
+	
+	printf("\nraw buffer + MAC \n");
+	print128(str,sizeof(str));	print128(mac,16);
+      //aes_ecb(key,str);
+      
+      //print128(key);
+      //print128(str);
+      
+}
